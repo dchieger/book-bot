@@ -1,7 +1,5 @@
 import os
 
-frankenstein_book = 'books/frankenstein.txt'
-
 def read_book(book_path):
     with open(book_path) as book:
         book_contents = book.read()
@@ -16,26 +14,47 @@ def count_words(book):
 
     return word_count
 
-def count_char(c, book):
+def get_dict(book):
+    char_dic = {}
     words_in_book = book.split()
-    ccount = 0
-    looking_for = c
-    book_chars
+    seen = []
+
     for word in words_in_book:
-        for c in word:
-            c = c.lower()
-            if c == looking_for:
-                if c in
-    return ccount
+        for char_key in word:
+            char_key = char_key.lower()
+            if char_key in seen:
+                char_dic[char_key] += 1
+            else:
+                char_dic[char_key] = 1
+                seen.append(char_key)
+                
+    return char_dic
+
+def sort_book_dict(book_dict):
+    new_book_dict = {}
+    for key in book_dict:
+        # if ord(key) in range(ord("a"), ord("z")+1):
+        #     new_book_dict[key] = book_dict[key]
+        if key.isalpha():
+            new_book_dict[key] = book_dict[key]
+    book_dict = {key: book_dict[key] for key in sorted(book_dict)}
+    book_dict = new_book_dict 
+
+    return book_dict
+
+def print_book_dict(book_dict):
+    for key, value in book_dict.items():
+        print(f"{key}: {value}")
+
+    return None
 
 def main():
-    frankenstein = read_book(frankenstein_book)
-    fb_char_count = count_words(frankenstein)
-
-    print(fb_char_count)
-    print(f"this many p\'s {count_char("p", frankenstein)}")
-    print(f"this many r\'s {count_char("r", frankenstein)}")
-    print(f"this many o\'s {count_char("o", frankenstein)}")
+    frankenstein_book_path = 'books/frankenstein.txt'
+    frankenstein_book = read_book(frankenstein_book_path)
+    frankenstein_char_dict = get_dict(frankenstein_book)
+    frankenstein_char_dict = sort_book_dict(frankenstein_char_dict)
+    print_book_dict(frankenstein_char_dict)
+    
 
 if __name__ =="__main__":
           main()
